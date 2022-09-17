@@ -1,16 +1,31 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 var g int = 10
 
 func main() {
+	stdin := bufio.NewReader(os.Stdin)
+
 	var a int
 	var b int
 
-	n, err := fmt.Scan(&a, &b)
+	n, err := fmt.Scanln(&a, &b)
+
 	if err != nil {
-		fmt.Println(n, err)
+		fmt.Println(err)
+		stdin.ReadString('\n')
+	} else {
+		fmt.Println(n, a, b)
+	}
+	n, err = fmt.Scanln(&a, &b)
+
+	if err != nil {
+		fmt.Println(err)
 	} else {
 		fmt.Println(n, a, b)
 	}
