@@ -5,10 +5,13 @@ import "fmt"
 var g int = 10
 
 func main() {
-	var a int = 10
-	var b int = 20
-	var f float64 = 32799438743.8297
+	var a int
+	var b int
 
-	fmt.Println("a:", a, "b:", b, "f:", f)
-	fmt.Printf("a: %d b: %d f: %f\n", a, b, f)
+	n, err := fmt.Scan(&a, &b)
+	if err != nil {
+		fmt.Println(n, err)
+	} else {
+		fmt.Println(n, a, b)
+	}
 }
