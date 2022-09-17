@@ -1,22 +1,14 @@
 package main
 
-import "fmt"
-
 func main() {
-	a := 1
-	b := 1
-	found := false
+	b := [2][5]int{
+		{1, 2, 3, 4, 5},
+		{6, 7, 8, 9, 10},
+	}
 
-	for ; a <= 9; a++ {
-		for b = 1; b <= 9; b++ {
-			if a*b == 45 {
-				found = true
-				break
-			}
-		}
-		if found {
-			break
+	for _, arr := range b {
+		for _, v := range arr {
+			print(v, " ")
 		}
 	}
-	fmt.Printf("%d * %d = %d\n", a, b, a*b)
 }
