@@ -1,32 +1,9 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-)
-
-var g int = 10
+import "fmt"
 
 func main() {
-	stdin := bufio.NewReader(os.Stdin)
+	var x int8 = 127
 
-	var a int
-	var b int
-
-	n, err := fmt.Scanln(&a, &b)
-
-	if err != nil {
-		fmt.Println(err)
-		stdin.ReadString('\n')
-	} else {
-		fmt.Println(n, a, b)
-	}
-	n, err = fmt.Scanln(&a, &b)
-
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(n, a, b)
-	}
+	fmt.Printf("%d < %d + 1: %t\n", x, x, x < x+1)
 }
