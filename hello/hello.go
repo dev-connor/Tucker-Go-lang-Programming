@@ -1,18 +1,22 @@
 package main
 
-func getMyAge() int {
-	return 22
-}
+import "fmt"
 
 func main() {
-	switch age := getMyAge(); {
-	case age < 10:
-		println("Child")
-	case age < 20:
-		println("Teenager")
-	case age < 30:
-		println("20s")
-	default:
-		println("My age is", age) // age 값 사용
+	a := 1
+	b := 1
+	found := false
+
+	for ; a <= 9; a++ {
+		for b = 1; b <= 9; b++ {
+			if a*b == 45 {
+				found = true
+				break
+			}
+		}
+		if found {
+			break
+		}
 	}
+	fmt.Printf("%d * %d = %d\n", a, b, a*b)
 }
