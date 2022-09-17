@@ -1,14 +1,14 @@
 package main
 
-import "fmt"
+var g int = 10
 
 func main() {
-	fmt.Println("Hello world!")
+	var m int = 20
 
-	var a int = 3
-	var b int
-	var c = 4
-	d := 5
+	{
+		var s int = 50
+		println(m, s, g)
+	}
 
-	println(a, b, c, d)
+	//m = s + 20 -> Error
 }
