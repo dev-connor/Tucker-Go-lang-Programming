@@ -1,9 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
+
+func equal(a, b float64) bool {
+	return math.Nextafter(a, b) == b
+}
 
 func main() {
-	var x int8 = 127
+	var a float64 = 0.1
+	var b float64 = 0.2
+	var c float64 = 0.3
 
-	fmt.Printf("%d < %d + 1: %t\n", x, x, x < x+1)
+	fmt.Printf("%0.18f + %0.18f = %0.18f\n", a, b, a+b)
+	fmt.Printf("%0.18f == %0.18f : %v\n", c, a+b, math.Nextafter(a+b, c) == c)
+
+	a = 0.0000000000004
+	b = 0.0000000000002
+	c = 0.0000000000007
+
+	fmt.Printf("%g == %g : %v\n", c, a+b, equal(a+b, c))
 }
