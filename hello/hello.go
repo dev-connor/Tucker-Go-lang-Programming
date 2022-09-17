@@ -7,6 +7,7 @@ func main() {
 	}
 
 	for _, arr := range b {
+
 		for _, v := range arr {
 			print(v, " ")
 		}
