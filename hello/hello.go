@@ -2,22 +2,32 @@ package main
 
 import "fmt"
 
-type House struct {
-	Address string
-	Size    int
-	Price   float64
-	Type    string
+type User struct {
+	Name string
+	ID   string
+	Age  int
+}
+
+type VIPUser struct {
+	User
+	VIPLevel int
+	Price    int
 }
 
 func main() {
-	var house House
-	house.Address = "서울시 강동구 ..."
-	house.Size = 28
-	house.Price = 9.8
-	house.Type = "아파트"
+	user := User{"송하나", "hana", 23}
+	vip := VIPUser{
+		User{"화랑", "hwarang", 40},
+		3,
+		250,
+	}
 
-	println("주소: ", house.Address)
-	fmt.Printf("크기: %d평\n", house.Size)
-	fmt.Printf("가격: %.2f억 원\n", house.Price)
-	println("타입: ", house.Type)
+	fmt.Printf("유저: %s ID: %s 나이: %d\n", user.Name, user.ID, user.Age)
+	fmt.Printf("VIP 유저: %s ID: %s 나이: %d VIP 레벨: %d VIP 가격: %d 만 원\n",
+		vip.Name,
+		vip.ID,
+		vip.Age,
+		vip.VIPLevel,
+		vip.Price,
+	)
 }
