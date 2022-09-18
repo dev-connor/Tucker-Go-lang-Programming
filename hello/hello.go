@@ -6,8 +6,9 @@ type Data struct {
 }
 
 func main() {
-	p1 := &Data{}
-	p2 := new(Data)
+	str := "Hello World"
+	runes := []rune{72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100}
 
-	println(p1, p2)
+	println(str)
+	println(string(runes))
 }
