@@ -1,33 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"unsafe"
+)
 
 type User struct {
-	Name string
-	ID   string
-	Age  int
-}
-
-type VIPUser struct {
-	User
-	VIPLevel int
-	Price    int
+	A int8
+	C int8
+	E int8
+	B int
+	D int
 }
 
 func main() {
-	user := User{"송하나", "hana", 23}
-	vip := VIPUser{
-		User{"화랑", "hwarang", 40},
-		3,
-		250,
-	}
-
-	fmt.Printf("유저: %s ID: %s 나이: %d\n", user.Name, user.ID, user.Age)
-	fmt.Printf("VIP 유저: %s ID: %s 나이: %d VIP 레벨: %d VIP 가격: %d 만 원\n",
-		vip.Name,
-		vip.ID,
-		vip.Age,
-		vip.VIPLevel,
-		vip.Price,
-	)
+	user := User{1, 2, 3, 4, 5}
+	memorySize := unsafe.Sizeof(user)
+	println("memorySize = ", memorySize)
 }
