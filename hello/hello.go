@@ -1,14 +1,11 @@
 package main
 
-type Data struct {
-	value int
-	data  [200]int
-}
+import "fmt"
 
 func main() {
-	str := "Hello World"
-	runes := []rune{72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100}
+	str := "Hello 월드!"
 
-	println(str)
-	println(string(runes))
+	for i := 0; i < len(str); i++ {
+		fmt.Printf(" 타입:%T 값:%d 문자값:%c\n", str[i], str[i], str[i])
+	}
 }
