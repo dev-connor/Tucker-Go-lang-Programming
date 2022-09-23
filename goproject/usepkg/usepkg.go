@@ -1,4 +1,4 @@
-package usepkg
+package main
 
 import (
 	"github.com/guptarohit/asciigraph"
