@@ -1,25 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"github.com/tuckersGo/musthaveGo/ch20/fedex"
+)
 
-type Stringer interface {
-	String() string
-}
-
-type Student struct {
-	Name string
-	Age  int
-}
-
-func (s Student) String() string {
-	return fmt.Sprintf("안녕! 나는 %d 살 %s 라고 해", s.Age, s.Name)
+func SendBook(name string, sender *fedex.FedexSender) {
+	sender.Send(name)
 }
 
 func main() {
-	student := Student{"철수", 12}
-	var stringer Stringer
-
-	stringer = student
-
-	fmt.Printf("%s\n", stringer.String())
+	sender := &fedex.FedexSender{}
+	SendBook("어린 왕자", sender)
+	SendBook("그리스인 조르바", sender)
 }
