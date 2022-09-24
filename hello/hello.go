@@ -2,36 +2,24 @@ package main
 
 import "fmt"
 
-type account struct {
-	balance   int
-	firstName string
-	lastName  string
+type Stringer interface {
+	String() string
 }
 
-func (a1 *account) withdrawPointer(amount int) {
-	a1.balance -= amount
+type Student struct {
+	Name string
+	Age  int
 }
 
-func (a2 account) withdrawValue(amount int) {
-	a2.balance -= amount
-}
-
-func (a3 account) withdrawReturnValue(amount int) account {
-	a3.balance -= amount
-	return a3
+func (s Student) String() string {
+	return fmt.Sprintf("안녕! 나는 %d 살 %s 라고 해", s.Age, s.Name)
 }
 
 func main() {
-	var mainA *account = &account{100, "Joe", "Park"}
-	mainA.withdrawPointer(30)
-	fmt.Println(mainA.balance)
+	student := Student{"철수", 12}
+	var stringer Stringer
 
-	mainA.withdrawValue(20)
-	fmt.Println(mainA.balance)
+	stringer = student
 
-	var mainB account = mainA.withdrawReturnValue(20)
-	fmt.Println(mainB.balance)
-
-	mainB.withdrawPointer(30)
-	fmt.Println(mainB.balance)
+	fmt.Printf("%s\n", stringer.String())
 }
