@@ -1,17 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
+
+type Writer func(string)
+
+func writeHello(writer Writer) {
+	writer("Hello World")
+}
 
 func main() {
-	i := 0
-
-	f := func() {
-		i += 10
+	f, err := os.Create("test.txt")
+	if err != nil {
+		fmt.Println("Failed to craete a file")
+		return
 	}
+	defer f.Close()
 
-	i++
-
-	f()
-
-	fmt.Println(i)
+	writeHello(func(msg string) {
+		fmt.Fprintln(f, msg)
+	})
 }
