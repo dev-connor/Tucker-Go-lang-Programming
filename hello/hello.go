@@ -1,15 +1,38 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
+
+type Student struct {
+	Name string
+	Age  int
+}
+
+type Students []Student
+
+func (s Students) Len() int {
+	return len(s)
+}
+
+func (s Students) Less(i, j int) bool {
+	return s[i].Age < s[j].Age
+}
+
+func (s Students) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
 
 func main() {
-	slice := []int{1, 2, 3, 4, 5, 6}
-	idx := 2
+	s := []Student{
+		{"화랑", 31},
+		{"백두산", 52},
+		{"류", 42},
+		{"켄", 38},
+		{"송하나", 18},
+	}
 
-	//slice = append(slice[:idx], append([]int{100}, slice[idx:]...)...)
-	slice = append(slice, 0)
-	copy(slice[idx+1:], slice[idx:])
-	slice[idx] = 100
-
-	fmt.Println(slice)
+	sort.Sort(Students(s))
+	fmt.Println(s)
 }
