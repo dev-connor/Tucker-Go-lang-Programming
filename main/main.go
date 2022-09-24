@@ -1,24 +1,29 @@
 package main
 
 import (
-	"github.com/tuckersGo/musthaveGo/ch20/fedex"
-	"github.com/tuckersGo/musthaveGo/ch20/koreaPost"
+	"fmt"
 )
 
-type Sender interface {
-	Send(parcel string)
+func PrintVal(v interface{}) {
+	switch t := v.(type) {
+	case int:
+		fmt.Printf("v is int %d\n", int(t))
+	case float64:
+		fmt.Printf("v is int %f\n", float64(t))
+	case string:
+		fmt.Printf("v is int %s\n", string(t))
+	default:
+		fmt.Printf("Not supported type: %T:%v\n", v, v)
+	}
 }
 
-func SendBook(name string, sender Sender) {
-	sender.Send(name)
+type Student struct {
+	Age int
 }
 
 func main() {
-	koreaPostSender := &koreaPost.PostSender{}
-	SendBook("어린 왕자", koreaPostSender)
-	SendBook("그리스인 조르바", koreaPostSender)
-
-	fedexSender := &fedex.FedexSender{}
-	SendBook("어린 왕자", fedexSender)
-	SendBook("그리스인 조르바", fedexSender)
+	PrintVal(10)
+	PrintVal(3.14)
+	PrintVal("Hello")
+	PrintVal(Student{15})
 }
