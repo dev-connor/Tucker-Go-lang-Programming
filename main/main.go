@@ -1,21 +1,29 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
+import "fmt"
+
+func add(a, b int) int {
+	return a + b
+}
+
+func mul(a, b int) int {
+	return a * b
+}
+
+func getOperator(op string) func(int, int) int {
+	if op == "+" {
+		return add
+	} else if op == "*" {
+		return mul
+	} else {
+		return nil
+	}
+}
 
 func main() {
-	f, err := os.Create("test.txt")
-	if err != nil {
-		fmt.Println("Failed to create a file")
-		return
-	}
+	var operator func(int, int) int
+	operator = getOperator("*")
 
-	defer fmt.Println("반드시 호출됩니다.")
-	defer f.Close()
-	defer fmt.Println("파일을 닫았습니다.")
-
-	fmt.Println("파일에 Hello World 를 씁니다.")
-	fmt.Fprintln(f, "Hello World")
+	var result = operator(3, 4)
+	fmt.Println(result)
 }
