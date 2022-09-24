@@ -2,28 +2,20 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
-func PrintVal(v interface{}) {
-	switch t := v.(type) {
-	case int:
-		fmt.Printf("v is int %d\n", int(t))
-	case float64:
-		fmt.Printf("v is int %f\n", float64(t))
-	case string:
-		fmt.Printf("v is int %s\n", string(t))
-	default:
-		fmt.Printf("Not supported type: %T:%v\n", v, v)
-	}
-}
-
-type Student struct {
-	Age int
-}
-
 func main() {
-	PrintVal(10)
-	PrintVal(3.14)
-	PrintVal("Hello")
-	PrintVal(Student{15})
+	f, err := os.Create("test.txt")
+	if err != nil {
+		fmt.Println("Failed to create a file")
+		return
+	}
+
+	defer fmt.Println("반드시 호출됩니다.")
+	defer f.Close()
+	defer fmt.Println("파일을 닫았습니다.")
+
+	fmt.Println("파일에 Hello World 를 씁니다.")
+	fmt.Fprintln(f, "Hello World")
 }
