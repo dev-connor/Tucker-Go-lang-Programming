@@ -2,16 +2,20 @@ package main
 
 import "fmt"
 
+type Product struct {
+	Name  string
+	Price int
+}
+
 func main() {
-	m := make(map[string]string)
-	m["이화랑"] = "서울시 광진구"
-	m["송하나"] = "서울시 강남구"
-	m["백두산"] = "부산시 사하구"
-	m["최번개"] = "전주시 덕진구"
+	m := make(map[int]Product)
 
-	m["최번개"] = "청주시 상당구"
+	m[16] = Product{"볼펜", 500}
+	m[46] = Product{"지우개", 200}
+	m[78] = Product{"자", 1000}
+	m[345] = Product{"샤프", 3000}
 
-	fmt.Printf("송하나의 주소는 %s 입니다.\n", m["송하나"])
-	fmt.Printf("백두산의 주소는 %s 입니다.\n", m["백두산"])
-	fmt.Printf("최번개의 주소는 %s 입니다.\n", m["최번개"])
+	for k, v := range m {
+		fmt.Println(k, v)
+	}
 }
