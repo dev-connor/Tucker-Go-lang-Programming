@@ -24,5 +24,6 @@ func main() {
 	for i := 0; i < 10; i++ {
 		ch <- i * 2 // 1. 데이터를 넣음
 	}
+	close(ch)
 	wg.Wait() // 3. 작업 완료를 기다림
 }
