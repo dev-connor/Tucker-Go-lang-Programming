@@ -2,20 +2,30 @@ package main
 
 import "fmt"
 
-type Product struct {
-	Name  string
-	Price int
+type passwordError struct {
+	Len        int
+	RequireLen int
+}
+
+func (err passwordError) Error() string {
+	return "암호 길이가 짧습니다."
+}
+
+func RegisterAccount(name, password string) error {
+	if len(password) < 8 {
+		return passwordError{len(password), 8}
+	}
+	return nil
 }
 
 func main() {
-	m := make(map[int]Product)
-
-	m[16] = Product{"볼펜", 500}
-	m[46] = Product{"지우개", 200}
-	m[78] = Product{"자", 1000}
-	m[345] = Product{"샤프", 3000}
-
-	for k, v := range m {
-		fmt.Println(k, v)
+	err := RegisterAccount("myID", "MyPw")
+	if err != nil {
+		if errInfo, ok := err.(passwordError); ok {
+			fmt.Printf("%v Len:%d RequiredLen:%d\n",
+				errInfo, errInfo.Len, errInfo.RequireLen)
+		}
+	} else {
+		fmt.Println("회원 가입됐습니다.")
 	}
 }
