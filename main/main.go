@@ -2,27 +2,28 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-func PrintHangul() {
-	hanguls := []rune{'가', '나', '다', '라', '마', '바', '사'}
-	for _, v := range hanguls {
-		time.Sleep(300 * time.Millisecond)
-		fmt.Printf("%c ", v)
-	}
-}
+var wg sync.WaitGroup
 
-func PrintNumbers() {
-	for i := 1; i <= 5; i++ {
-		time.Sleep(400 * time.Millisecond)
-		fmt.Printf("%d ", i)
+func SumAtoB(a, b int) {
+	sum := 0
+	for i := a; i <= b; i++ {
+		sum += i
 	}
+	fmt.Println("계산 중 입니다.")
+	time.Sleep(3 * time.Second)
+	fmt.Printf("%d 부터 %d 까지 합계는 %d 입니다.\n", a, b, sum)
+	wg.Done()
 }
 
 func main() {
-	go PrintHangul()
-	go PrintNumbers()
-
-	time.Sleep(3 * time.Second)
+	wg.Add(10)
+	for i := 0; i < 10; i++ {
+		go SumAtoB(1, 1000000000)
+	}
+	wg.Wait()
+	println("END")
 }
