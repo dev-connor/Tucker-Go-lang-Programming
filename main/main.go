@@ -2,34 +2,27 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
-func f() {
-	println("f() 함수 시작")
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Println("panic 복구 - ", r)
-		}
-	}()
-
-	g()
-	fmt.Println("f() 함수 끝")
-
-}
-
-func g() {
-	fmt.Printf("9 / 3 = %d\n", h(9, 3))
-	fmt.Printf("9 / 0 = %d\n", h(9, 0))
-}
-
-func h(a int, b int) int {
-	if b == 0 {
-		panic("제수는 0 일 수 없습니다.")
+func PrintHangul() {
+	hanguls := []rune{'가', '나', '다', '라', '마', '바', '사'}
+	for _, v := range hanguls {
+		time.Sleep(300 * time.Millisecond)
+		fmt.Printf("%c ", v)
 	}
-	return a / b
+}
+
+func PrintNumbers() {
+	for i := 1; i <= 5; i++ {
+		time.Sleep(400 * time.Millisecond)
+		fmt.Printf("%d ", i)
+	}
 }
 
 func main() {
-	f()
-	fmt.Println("프로그램이 계속 실행됨")
+	go PrintHangul()
+	go PrintNumbers()
+
+	time.Sleep(3 * time.Second)
 }
