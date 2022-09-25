@@ -1,40 +1,27 @@
 package main
 
 import (
-	"container/list"
+	"container/ring"
 	"fmt"
 )
 
-type Queue struct {
-	v *list.List
-}
-
-func (q *Queue) Push(val interface{}) {
-	q.v.PushBack(val)
-}
-func (q *Queue) Pop() interface{} {
-	front := q.v.Front()
-	if front != nil {
-		return q.v.Remove(front)
-	}
-	return nil
-}
-
-func NewQueue() *Queue {
-	return &Queue{list.New()}
-}
-
 func main() {
-	queue := NewQueue()
+	r := ring.New(5)
+	n := r.Len()
 
-	for i := 1; i < 5; i++ {
-		queue.Push(i)
+	for i := 0; i < n; i++ {
+		r.Value = 'A' + i
+		r = r.Next()
 	}
 
-	v := queue.Pop()
+	for j := 0; j < n; j++ {
+		fmt.Printf("%c ", r.Value)
+		r = r.Next()
+	}
+	fmt.Println()
 
-	for v != nil {
-		fmt.Printf("%v -> ", v)
-		v = queue.Pop()
+	for j := 0; j < n; j++ {
+		fmt.Printf("%c ", r.Value)
+		r = r.Prev()
 	}
 }
