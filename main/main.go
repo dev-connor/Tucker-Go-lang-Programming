@@ -1,25 +1,23 @@
 package main
 
 import (
+	"container/list"
 	"fmt"
-	"os"
 )
 
-type Writer func(string)
-
-func writeHello(writer Writer) {
-	writer("Hello World")
-}
-
 func main() {
-	f, err := os.Create("test.txt")
-	if err != nil {
-		fmt.Println("Failed to craete a file")
-		return
-	}
-	defer f.Close()
+	v := list.New()
+	e4 := v.PushBack(4)
+	e1 := v.PushFront(1)
+	v.InsertBefore(3, e4)
+	v.InsertAfter(2, e1)
 
-	writeHello(func(msg string) {
-		fmt.Fprintln(f, msg)
-	})
+	for e := v.Front(); e != nil; e = e.Next() {
+		fmt.Print(e.Value, " ")
+	}
+	println()
+
+	for e := v.Back(); e != nil; e = e.Prev() {
+		fmt.Print(e.Value, " ")
+	}
 }
