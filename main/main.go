@@ -1,31 +1,61 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"errors"
+	"fmt"
+	"strconv"
+	"strings"
+)
 
-type passwordError struct {
-	Len        int
-	RequireLen int
-}
+func MultipleFromString(str string) (int, error) {
+	scanner := bufio.NewScanner(strings.NewReader(str))
+	scanner.Split(bufio.ScanWords)
 
-func (err passwordError) Error() string {
-	return "암호 길이가 짧습니다."
-}
-
-func RegisterAccount(name, password string) error {
-	if len(password) < 8 {
-		return passwordError{len(password), 8}
+	pos := 0
+	a, n, err := readNextInt(scanner)
+	if err != nil {
+		return 0, fmt.Errorf("Failed to readNextInt(), pos:%d err:%w", pos, err)
 	}
-	return nil
+
+	pos += n + 1
+	b, n, err := readNextInt(scanner)
+	if err != nil {
+		return 0, fmt.Errorf("Failed to readNextInt(), pos:%d err:%w", pos, err)
+	}
+	return a * b, nil
+}
+
+func readNextInt(scanner *bufio.Scanner) (int, int, error) {
+	if !scanner.Scan() {
+		return 0, 0, fmt.Errorf("Failed to scan")
+	}
+	word := scanner.Text()
+	number, err := strconv.Atoi(word)
+
+	if err != nil {
+		return 0, 0, fmt.Errorf("Failed to convert word to int, word:%s err:%w",
+			word, err)
+	}
+	return number, len(word), nil
+}
+
+func readEq(eq string) {
+	rst, err := MultipleFromString(eq)
+	if err == nil {
+		fmt.Println(rst)
+	} else {
+		fmt.Println(err)
+		var numError *strconv.NumError
+		if errors.As(err, &numError) {
+			fmt.Println("NumberError:", numError)
+		}
+
+	}
+
 }
 
 func main() {
-	err := RegisterAccount("myID", "MyPw")
-	if err != nil {
-		if errInfo, ok := err.(passwordError); ok {
-			fmt.Printf("%v Len:%d RequiredLen:%d\n",
-				errInfo, errInfo.Len, errInfo.RequireLen)
-		}
-	} else {
-		fmt.Println("회원 가입됐습니다.")
-	}
+	readEq("123 3")
+	readEq("123 abc")
 }
