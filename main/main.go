@@ -5,19 +5,36 @@ import (
 	"fmt"
 )
 
-func main() {
-	v := list.New()
-	e4 := v.PushBack(4)
-	e1 := v.PushFront(1)
-	v.InsertBefore(3, e4)
-	v.InsertAfter(2, e1)
+type Queue struct {
+	v *list.List
+}
 
-	for e := v.Front(); e != nil; e = e.Next() {
-		fmt.Print(e.Value, " ")
+func (q *Queue) Push(val interface{}) {
+	q.v.PushBack(val)
+}
+func (q *Queue) Pop() interface{} {
+	front := q.v.Front()
+	if front != nil {
+		return q.v.Remove(front)
 	}
-	println()
+	return nil
+}
 
-	for e := v.Back(); e != nil; e = e.Prev() {
-		fmt.Print(e.Value, " ")
+func NewQueue() *Queue {
+	return &Queue{list.New()}
+}
+
+func main() {
+	queue := NewQueue()
+
+	for i := 1; i < 5; i++ {
+		queue.Push(i)
+	}
+
+	v := queue.Pop()
+
+	for v != nil {
+		fmt.Printf("%v -> ", v)
+		v = queue.Pop()
 	}
 }
