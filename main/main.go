@@ -6,24 +6,31 @@ import (
 	"time"
 )
 
-func square(wg *sync.WaitGroup, ch chan int) {
-	for n := range ch { // 2. 데이터를 계속 기다림
-		fmt.Printf("Square: %d\n", n*n)
-		time.Sleep(time.Second)
+func square(wg *sync.WaitGroup, ch chan int, quit chan bool) {
+	for {
+		select {
+		case n := <-ch:
+			fmt.Printf("Square: %d\n", n*n)
+			time.Sleep(time.Second)
+		case <-quit:
+			wg.Done()
+			return
+		}
+
 	}
-	wg.Done() // 4. 실행되지 않음
 }
 
 func main() {
 	var wg sync.WaitGroup
 	ch := make(chan int)
+	quit := make(chan bool)
 
 	wg.Add(1)
-	go square(&wg, ch)
+	go square(&wg, ch, quit)
 
 	for i := 0; i < 10; i++ {
-		ch <- i * 2 // 1. 데이터를 넣음
+		ch <- i * 2
 	}
-	close(ch)
-	wg.Wait() // 3. 작업 완료를 기다림
+	quit <- true
+	wg.Wait()
 }
