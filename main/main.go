@@ -12,10 +12,10 @@ func square(wg *sync.WaitGroup, ch chan int) {
 
 	for {
 		select {
-		case <-tick:
-			fmt.Println("Tick")
-		case <-terminate:
-			fmt.Println("Terminated!")
+		case t := <-tick:
+			fmt.Println("Tick", t)
+		case end := <-terminate:
+			fmt.Println("Terminated!", end)
 			wg.Done()
 			return
 		case n := <-ch:
