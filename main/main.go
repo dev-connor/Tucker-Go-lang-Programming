@@ -11,12 +11,20 @@ var wg sync.WaitGroup
 
 func main() {
 	wg.Add(1)
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	go PrintEverySecond(ctx)
-	time.Sleep(5 * time.Second)
-	cancel()
+
+	ctx := context.WithValue(context.Background(), "number", 9)
+	go square(ctx)
 
 	wg.Wait()
+
+}
+
+func square(ctx context.Context) {
+	if v := ctx.Value("number"); v != nil {
+		n := v.(int)
+		fmt.Printf("Square:%d", n*n)
+	}
+	wg.Done()
 
 }
 
