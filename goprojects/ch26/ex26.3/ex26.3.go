@@ -39,14 +39,13 @@ func main() {
 		for _, lineInfo := range findInfo.lines {
 			println("\t", lineInfo.lineNo, "\t", lineInfo.line)
 		}
-		fmt.Println(findInfo.filename)
 		fmt.Println()
 
 	}
 
 }
 
-func FindWordInAllFiles(word string, path string) []FindInfo {
+func FindWordInAllFiles(word, path string) []FindInfo {
 	findInfos := []FindInfo{}
 
 	filelist, err := GetFileList(path)
@@ -63,7 +62,7 @@ func FindWordInAllFiles(word string, path string) []FindInfo {
 }
 
 func GetFileList(path string) ([]string, error) {
-	return filepath.Glob(path)
+	return filepath.Glob(path) // path 에 해당하는 파일리스트를 가져온다.
 }
 
 func FindWordInFile(word, filename string) FindInfo {
