@@ -1,25 +1,17 @@
 package main
 
-type Report interface {
-	Report() string
-}
-
-type FinanceReport struct { // 회계 보고서
-	report string
-}
-
-func (r *FinanceReport) Report() string {
-	return r.report
-}
-
-type ReportSender struct {
-	// ...
-}
-
-func (s *ReportSender) SendReport(report Report) { // 보고서 전송
-	// Report 인터페이스 객체를 인수로 받음
-	// ...
-	print(report.Report())
+func SendReport(r *Report, method SendType, receiver string) {
+	switch method {
+	case Email:
+		// 이메일 전송
+	case Fax:
+		// 팩스 전송
+	case PDF:
+		// pdf 파일 생성
+	case Printer:
+		// 프린팅
+		// ...
+	}
 }
 
 func main() {
