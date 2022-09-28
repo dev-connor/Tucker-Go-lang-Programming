@@ -1,23 +1,12 @@
 package main
 
-func SendReport(r *Report, method SendType, receiver string) {
-	switch method {
-	case Email:
-		// 이메일 전송
-	case Fax:
-		// 팩스 전송
-	case PDF:
-		// pdf 파일 생성
-	case Printer:
-		// 프린팅
-		// ...
-	}
+type Mail struct {
+	alarm Alarm
 }
 
-func main() {
-	f := FinanceReport{"재무 보고서 내용"}
-	r := ReportSender{}
+type Alarm struct {
+}
 
-	r.SendReport(&f)
-
+func (m *Mail) OnRecv() { // OnRecv() 메서드는 메일 수신 시 호출됩니다.
+	m.alarm.Alarm() // 알람을 울립니다.
 }
