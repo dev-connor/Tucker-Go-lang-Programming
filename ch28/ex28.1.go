@@ -5,7 +5,7 @@ import (
 )
 
 func square(x int) int {
-	return 81
+	return x * x
 }
 
 func main() {
