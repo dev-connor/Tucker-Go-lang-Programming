@@ -1,4 +1,4 @@
-package ch28
+package ex28_1
 
 import (
 	assert2 "github.com/stretchr/testify/assert"
