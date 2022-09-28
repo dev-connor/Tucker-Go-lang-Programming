@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("main function")
+	fmt.Println("ch28 function")
 	exinit.PrintD()
 }

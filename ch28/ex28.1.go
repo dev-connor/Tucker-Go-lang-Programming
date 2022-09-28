@@ -1,6 +1,8 @@
-package main
+package ch28
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func square(x int) int {
 	return 81
