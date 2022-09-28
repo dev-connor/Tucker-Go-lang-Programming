@@ -17,6 +17,13 @@ func barHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/bar", barHandler)
-	http.ListenAndServe(":3000", nil) // 웹 서버 시작
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Fprint(writer, "Hello World") // 인스턴스에 핸들러 등록
+	})
+	mux.HandleFunc("/bar", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Fprint(writer, "Hello Bar")
+	})
+
+	http.ListenAndServe(":3000", mux) // 웹 서버 시작
 }
