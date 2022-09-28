@@ -3,12 +3,20 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
-func main() {
-	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprint(writer, "Hello world") // 웹 핸들러 등록
-	})
+func barHandler(w http.ResponseWriter, r *http.Request) {
+	values := r.URL.Query()
+	name := values.Get("name")
+	if name == "" {
+		name = "World"
+	}
+	id, _ := strconv.Atoi(values.Get("id"))
+	fmt.Fprintf(w, "Hello %s! id:%d", name, id)
+}
 
+func main() {
+	http.HandleFunc("/bar", barHandler)
 	http.ListenAndServe(":3000", nil) // 웹 서버 시작
 }
