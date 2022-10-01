@@ -22,6 +22,7 @@ func MakeWebHandler() http.Handler {
 	mux := mux2.NewRouter()
 	mux.HandleFunc("/students", GetStudentListHandler).Methods("GET")
 	mux.HandleFunc("/students/{id:[0-9]+}", GetStudentHandler).Methods("GET")
+	mux.HandleFunc("/students", PostStudentHandler).Methods("POST")
 
 	// 2. 새 핸들러를 등록
 
@@ -32,6 +33,19 @@ func MakeWebHandler() http.Handler {
 	lastId = 2
 
 	return mux
+}
+
+func PostStudentHandler(response http.ResponseWriter, request *http.Request) {
+	var student Student
+	err := json.NewDecoder(request.Body).Decode(&student) // JSON 데이터 변환
+	if err != nil {
+		response.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	lastId++ // 2. id 를 증가시킨 후 맵에 등록
+	student.Id = lastId
+	students[lastId] = student
+	response.WriteHeader(http.StatusCreated)
 }
 
 func GetStudentHandler(writer http.ResponseWriter, request *http.Request) {

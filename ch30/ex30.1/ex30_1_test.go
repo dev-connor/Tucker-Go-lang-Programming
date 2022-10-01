@@ -5,10 +5,11 @@ import (
 	assert2 "github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
-func TestJsonHandler(t *testing.T) {
+func TestJsonHandler1(t *testing.T) {
 	assert := assert2.New(t)
 
 	res := httptest.NewRecorder()
@@ -29,18 +30,18 @@ func TestJsonHandler(t *testing.T) {
 }
 
 func TestJsonHandler2(t *testing.T) {
-	assert := assert2.New(t)
-
 	var student Student
+
+	assert := assert2.New(t)
 	mux := MakeWebHandler()
 	res := httptest.NewRecorder()
 	req := httptest.NewRequest("GET", "/students/1", nil)
-
 	mux.ServeHTTP(res, req)
-	assert.Equal(http.StatusOK, res.Code)
+
+	assert2.Equal(t, http.StatusOK, res.Code)
 	err := json.NewDecoder(res.Body).Decode(&student)
-	assert.Nil(err)
-	assert.Equal("aaa", student.Name)
+	assert2.Nil(t, err)
+	assert2.Equal(t, "aaa", student.Name)
 
 	res = httptest.NewRecorder()
 	req = httptest.NewRequest("GET", "/students/2", nil)
@@ -50,4 +51,28 @@ func TestJsonHandler2(t *testing.T) {
 	err = json.NewDecoder(res.Body).Decode(&student)
 	assert.Nil(err)
 	assert.Equal("bbb", student.Name)
+}
+
+func TestJsonHandler3(t *testing.T) {
+	var student Student
+
+	mux := MakeWebHandler()
+	res := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/students",
+		strings.NewReader(`{"Id":0,"Name":"ccc","Age":15,"Score":78}`))
+
+	// 1. 새로운 학생 데이터
+	mux.ServeHTTP(res, req)
+
+	assert2.Equal(t, http.StatusCreated, res.Code)
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest("GET", "/students/3", nil)
+
+	// 3. 추가된 학생 데이터
+	mux.ServeHTTP(res, req)
+
+	err := json.NewDecoder(res.Body).Decode(&student)
+	assert2.Nil(t, err)
+	assert2.Equal(t, "ccc", student.Name)
 }
