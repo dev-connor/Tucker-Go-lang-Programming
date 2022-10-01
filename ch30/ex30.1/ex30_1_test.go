@@ -76,3 +76,19 @@ func TestJsonHandler3(t *testing.T) {
 	assert2.Nil(t, err)
 	assert2.Equal(t, "ccc", student.Name)
 }
+
+func TestJsonHandler4(t *testing.T) {
+	assert := assert2.New(t)
+	mux := MakeWebHandler()
+
+	res := httptest.NewRecorder()
+	req := httptest.NewRequest("DELETE", "/students/2", nil)
+	mux.ServeHTTP(res, req)
+
+	assert.Equal(http.StatusOK, res.Code)
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest("GET", "/students/2", nil)
+	mux.ServeHTTP(res, req)
+	assert.Equal(http.StatusNotFound, res.Code)
+}
