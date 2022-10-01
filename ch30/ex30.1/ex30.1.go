@@ -5,6 +5,7 @@ import (
 	mux2 "github.com/gorilla/mux"
 	"net/http"
 	"sort"
+	"strconv"
 )
 
 type Student struct {
@@ -20,6 +21,7 @@ var lastId int
 func MakeWebHandler() http.Handler {
 	mux := mux2.NewRouter()
 	mux.HandleFunc("/students", GetStudentListHandler).Methods("GET")
+	mux.HandleFunc("/students/{id:[0-9]+}", GetStudentHandler).Methods("GET")
 
 	// 2. 새 핸들러를 등록
 
@@ -30,6 +32,21 @@ func MakeWebHandler() http.Handler {
 	lastId = 2
 
 	return mux
+}
+
+func GetStudentHandler(writer http.ResponseWriter, request *http.Request) {
+	vars := mux2.Vars(request)
+	id, _ := strconv.Atoi(vars["id"])
+	student, ok := students[id]
+
+	if !ok {
+		writer.WriteHeader(http.StatusNotFound)
+		// 2. id 에 해당하는 학생이 없으면 에러
+		return
+	}
+	writer.WriteHeader(http.StatusOK)
+	writer.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(writer).Encode(student)
 }
 
 func GetStudentListHandler(writer http.ResponseWriter, request *http.Request) {
