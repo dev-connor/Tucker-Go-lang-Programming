@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/negroni"
 	"log"
 	"net/http"
+	"os"
 	"sort"
 	"strconv"
 )
@@ -111,7 +112,8 @@ func main() {
 	n.UseHandler(m)
 
 	log.Println("Started App")
-	err := http.ListenAndServe(":3000", n)
+	port := os.Getenv("PORT")               // 1. 환경변수에서 PORT 가져오기
+	err := http.ListenAndServe(":"+port, n) // 2. port 를 이용해서 웹 서버 실행
 	if err != nil {
 		panic(err)
 	}
