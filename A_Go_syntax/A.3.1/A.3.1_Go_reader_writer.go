@@ -17,6 +17,7 @@ func main() {
 
 	for scanner.Scan() {
 		count++
+		println(scanner.Text())
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintf(os.Stderr, "reading input:", err)
