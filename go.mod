@@ -7,4 +7,5 @@ require (
 	github.com/stretchr/testify v1.8.0
 	github.com/unrolled/render v1.5.0 // indirect
 	github.com/urfave/negroni v1.0.0 // indirect
+	golang.org/x/tools v0.1.12 // indirect
 )
